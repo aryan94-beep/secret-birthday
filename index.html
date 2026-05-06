@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>For You ❤️</title>
+
+<style>
+body{
+  margin:0;
+  font-family:'Comic Sans MS', cursive;
+  text-align:center;
+  overflow:hidden;
+}
+
+/* Background */
+#bg{
+  position:fixed;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:-1;
+  opacity:0.5;
+}
+
+/* Container */
+.container{
+  margin-top:120px;
+}
+
+h1{
+  color:#ff0055;
+  text-shadow:0 0 10px #ff66a3, 0 0 20px #ff3385;
+}
+
+/* Input */
+input{
+  padding:12px;
+  font-size:20px;
+  border-radius:10px;
+  border:2px solid #ff4d88;
+}
+
+/* Button */
+button{
+  padding:10px 20px;
+  font-size:16px;
+  border:none;
+  border-radius:10px;
+  background:#ff4d88;
+  color:white;
+  margin:10px;
+  cursor:pointer;
+}
+
+/* YES button (glow + bigger) */
+#yesBtn{
+  font-size:20px;
+  padding:14px 28px;
+  background:#ff1a75;
+  box-shadow:0 0 10px #ff66a3, 0 0 25px #ff3385;
+}
+
+/* NO button moving */
+#noBtn{
+  position:relative;
+}
+
+/* Comic box */
+#comic{
+  display:none;
+  margin:60px auto;
+  width:80%;
+  background:white;
+  border:5px solid black;
+  border-radius:20px;
+  padding:25px;
+  box-shadow:0 0 20px pink, 0 0 40px hotpink;
+}
+
+/* Message */
+#text{
+  font-size:22px;
+  text-shadow:0 0 5px pink;
+}
+
+/* Flowers */
+.flower{
+  position:fixed;
+  top:-50px;
+  font-size:24px;
+  animation:fall linear infinite;
+}
+
+@keyframes fall{
+  to{ transform:translateY(110vh); }
+}
+
+/* Ring animation */
+#ring{
+  display:none;
+  font-size:50px;
+  animation:pop 0.6s ease;
+}
+
+@keyframes pop{
+  0%{transform:scale(0);}
+  100%{transform:scale(1);}
+}
+</style>
+</head>
+
+<body>
+
+<img id="bg" src="background.jpeg">
+
+<div class="container">
+  <h1>🔐 Enter The Secret Code</h1>
+
+  <input type="password" id="pass" maxlength="6">
+  <br>
+  <button onclick="check()">Unlock</button>
+
+  <div id="hint"></div>
+</div>
+
+<div id="comic">
+  <h1>💖 For You 💖</h1>
+
+  <div id="text"></div>
+
+  <div id="proposal" style="display:none;">
+    <h2>Byah karogi humse.? 💍</h2>
+
+    <button id="yesBtn" onclick="yesClick()">Yes ❤️</button>
+    <button id="noBtn" onmouseover="moveNo()">Nahi, tere se nahi karungi toh kise karungi 😏</button>
+
+    <div id="ring">💍</div>
+    <div id="response"></div>
+  </div>
+</div>
+
+<script>
+const correct = "201222";
+let tries = 0;
+
+function check(){
+  let val = document.getElementById("pass").value;
+
+  if(val === correct){
+    document.querySelector(".container").style.display="none";
+    document.getElementById("comic").style.display="block";
+    typeText();
+    startFlowers();
+  }else{
+    tries++;
+    document.getElementById("hint").innerText="Wrong! Try again ❤️";
+  }
+}
+
+/* Message typing */
+let msg = `To my moti,my bestfriend and my favorite person happy birthday. 
+From the day I proposed you while being Drunk to the day when we celebrated our first birthday 
+and uptill now, these years have been the best of my life,and i cant wait to see what the future holds for us . 
+i love you endlessly ❤️ Tu toh meri Bacchi hai re, Hasti khelti raha kar`;
+
+let i=0;
+
+function typeText(){
+  if(i < msg.length){
+    document.getElementById("text").innerHTML += msg.charAt(i);
+    i++;
+    setTimeout(typeText,30);
+  } else {
+    document.getElementById("proposal").style.display="block";
+  }
+}
+
+/* Flowers */
+function startFlowers(){
+  setInterval(()=>{
+    let f=document.createElement("div");
+    f.className="flower";
+    f.innerHTML="🌸";
+
+    f.style.left=Math.random()*window.innerWidth+"px";
+    f.style.animationDuration=(3+Math.random()*3)+"s";
+
+    document.body.appendChild(f);
+    setTimeout(()=>f.remove(),6000);
+  },300);
+}
+
+/* YES click */
+function yesClick(){
+  document.getElementById("ring").style.display="block";
+  document.getElementById("response").innerHTML="Ab toh pakki baat ho gayi 😌❤️";
+}
+
+/* NO button moves */
+function moveNo(){
+  let btn=document.getElementById("noBtn");
+  btn.style.left = (Math.random()*200 - 100) + "px";
+  btn.style.top = (Math.random()*100 - 50) + "px";
+}
+</script>
+
+</body>
+</html>
